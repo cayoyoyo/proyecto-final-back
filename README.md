@@ -153,7 +153,6 @@ module.exports = mongoose.model('Chat', chatSchema);
 | /productos/crear         | POST            | Crear un nuevo producto                       | Nuevo objeto de producto o estado de éxito |
 | /productos/:id/edit       | PUT            | Editar detalles de un producto específico    | Objeto de producto actualizado o estado de éxito |
 | /productos/:id/eliminar     | DELETE       | Eliminar un producto específico              | Mensaje de éxito o estado |
-| /favoritos               | GET             | Obtener productos favoritos del usuario      | Lista de productos favoritos en JSON |
 | /favoritos/agregar/:id       | POST         | Agregar un producto a favoritos del usuario | Mensaje de éxito o estado |
 | /favoritos/eliminar/:id    | DELETE       | Eliminar un producto de favoritos del usuario| Mensaje de éxito o estado |
 | /chats                   | GET          | Obtener conversaciones de chat del usuario    | Lista de conversaciones de chat en JSON |
