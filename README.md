@@ -143,33 +143,32 @@ module.exports = mongoose.model('Chat', chatSchema);
 
 ## Rutas de la Aplicación
 
-| Route                    | Request Type | Description                                  | Response                  |
-|--------------------------|--------------|----------------------------------------------|---------------------------|
-| /                        | GET          | Home page with featured products             | List of products in HTML  |
-| /login                   | POST         | User login                                   | User authentication token |
-| /logout                  | POST         | User logout                                  | Message or success status |
-| /signup                  | POST         | User registration                            | New user object or success status |
-| /products                | GET          | Get all products                            | List of products in JSON  |
-| /products/:id            | GET          | Get details of a specific product            | Product details in JSON   |
-| /products/create         | POST         | Create a new product                         | New product object or success status |
-| /products/:id/edit       | PUT          | Edit details of a specific product           | Updated product object or success status |
-| /products/:id/delete     | DELETE       | Delete a specific product                    | Success message or status |
-| /favorites               | GET          | Get user's favorite products                | List of favorite products in JSON |
-| /favorites/add/:id       | POST         | Add a product to user's favorites            | Success message or status |
-| /favorites/remove/:id    | DELETE       | Remove a product from user's favorites       | Success message or status |
-| /cart                    | GET          | Get user's shopping cart                     | Shopping cart details in JSON |
-| /cart/add/:id            | POST         | Add a product to the shopping cart           | Updated shopping cart details or success status |
-| /cart/edit/:id           | PUT          | Edit product quantity in the shopping cart   | Updated shopping cart details or success status |
-| /cart/remove/:id         | DELETE       | Remove a product from the shopping cart      | Updated shopping cart details or success status |
-| /orders                  | GET          | Get user's order history                    | List of user's orders in JSON |
-| /orders/create           | POST         | Create a new order                           | New order object or success status |
-| /orders/:id              | GET          | Get details of a specific order              | Order details in JSON      |
-| /orders/:id/edit         | PUT          | Edit details of a specific order             | Updated order details or success status |
-| /orders/:id/delete       | DELETE       | Delete a specific order                      | Success message or status |
-| /chats                   | GET          | Get user's chat conversations                | List of chat conversations in JSON |
-| /chats/create/:userId    | POST         | Create a new chat conversation               | New chat conversation object or success status |
-| /chats/:id               | GET          | Get messages from a specific chat            | List of messages in JSON   |
-| /chats/:id/send-message  | POST         | Send a message in a chat                     | Updated chat messages or success status |
-
+| Ruta                    | Tipo de Llamada | Descripción                                  | Respuesta                  |
+|--------------------------|-----------------|----------------------------------------------|---------------------------|
+| /                        | GET             | Página de inicio con productos destacados     | Lista de productos en HTML  |
+| /login                   | POST            | Inicio de sesión de usuario                   | Token de autenticación de usuario |
+| /logout                  | POST            | Cierre de sesión de usuario                   | Mensaje o estado de éxito |
+| /signup                  | POST            | Registro de usuario                           | Nuevo objeto de usuario o estado de éxito |
+| /productos                | GET             | Obtener todos los productos                   | Lista de productos en JSON  |
+| /productos/:id            | GET             | Obtener detalles de un producto específico   | Detalles del producto en JSON   |
+| /productos/crear         | POST            | Crear un nuevo producto                       | Nuevo objeto de producto o estado de éxito |
+| /productos/:id/edit       | PUT            | Editar detalles de un producto específico    | Objeto de producto actualizado o estado de éxito |
+| /productos/:id/eliminar     | DELETE       | Eliminar un producto específico              | Mensaje de éxito o estado |
+| /favoritos               | GET             | Obtener productos favoritos del usuario      | Lista de productos favoritos en JSON |
+| /favoritos/agregar/:id       | POST         | Agregar un producto a favoritos del usuario | Mensaje de éxito o estado |
+| /favoritos/eliminar/:id    | DELETE       | Eliminar un producto de favoritos del usuario| Mensaje de éxito o estado |
+| /carrito                    | GET          | Obtener carrito de compras del usuario       | Detalles del carrito en JSON |
+| /carrito/agregar/:id            | POST    | Agregar un producto al carrito de compras     | Detalles del carrito actualizados o estado de éxito |
+| /carrito/editar/:id           | PUT         | Editar cantidad de un producto en el carrito  | Detalles del carrito actualizados o estado de éxito |
+| /carrito/eliminar/:id         | DELETE      | Eliminar un producto del carrito de compras   | Detalles del carrito actualizados o estado de éxito |
+| /ordenes                  | GET          | Obtener historial de órdenes del usuario     | Lista de órdenes del usuario en JSON |
+| /ordenes/crear           | POST         | Crear una nueva orden                         | Nuevo objeto de orden o estado de éxito |
+| /ordenes/:id              | GET          | Obtener detalles de una orden específica     | Detalles de la orden en JSON      |
+| /ordenes/:id/editar         | PUT         | Editar detalles de una orden específica      | Detalles de la orden actualizados o estado de éxito |
+| /ordenes/:id/eliminar       | DELETE      | Eliminar una orden específica                | Mensaje de éxito o estado |
+| /chats                   | GET          | Obtener conversaciones de chat del usuario    | Lista de conversaciones de chat en JSON |
+| /chats/crear/:userId    | POST         | Crear una nueva conversación de chat          | Nuevo objeto de conversación de chat o estado de éxito |
+| /chats/:id               | GET          | Obtener mensajes de una conversación específica | Lista de mensajes en JSON   |
+| /chats/:id/enviar-mensaje  | POST         | Enviar un mensaje en una conversación de chat | Mensajes de chat actualizados o estado de éxito |
 
 ¡Gracias por utilizar nuestra plataforma de compra y venta en línea similar a Wallapop!
