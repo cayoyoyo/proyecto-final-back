@@ -24,17 +24,33 @@ Este proyecto fue desarrollado por [Tu Nombre].
 
 ## Rutas de la Aplicación
 
-| Ruta                   | Tipo de Llamada | Descripción                                   | Respuesta                 |
-|------------------------|-----------------|-----------------------------------------------|---------------------------|
-| /                      | GET             | Página de inicio con productos destacados     | Lista de productos en HTML|
-| /login                 | GET             | Página de inicio de sesión                    | Formulario de inicio de sesión|
-| /login                 | POST            | Iniciar sesión                                | Redirección a la página principal|
-| /products              | GET             | Lista de todos los productos                 | Lista de productos en HTML|
-| /products/:id          | GET             | Detalles de un producto                       | Detalles del producto en HTML|
-| /favorites             | GET             | Lista de productos favoritos del usuario      | Lista de productos en HTML|
-| /chat/:sellerId        | GET             | Chat en línea con un vendedor                 | Chat en HTML              |
-| /api/products          | POST            | Publicar un nuevo producto                    | Producto publicado en JSON|
-| /api/products/:id      | PUT             | Actualizar detalles de un producto            | Producto actualizado en JSON|
-| /api/products/:id      | DELETE          | Eliminar un producto                          | Mensaje de confirmación   |
+| Route                    | Request Type | Description                                  | Response                  |
+|--------------------------|--------------|----------------------------------------------|---------------------------|
+| /                        | GET          | Home page with featured products             | List of products in HTML  |
+| /login                   | POST         | User login                                   | User authentication token |
+| /logout                  | POST         | User logout                                  | Message or success status |
+| /signup                  | POST         | User registration                            | New user object or success status |
+| /products                | GET          | Get all products                            | List of products in JSON  |
+| /products/:id            | GET          | Get details of a specific product            | Product details in JSON   |
+| /products/create         | POST         | Create a new product                         | New product object or success status |
+| /products/:id/edit       | PUT          | Edit details of a specific product           | Updated product object or success status |
+| /products/:id/delete     | DELETE       | Delete a specific product                    | Success message or status |
+| /favorites               | GET          | Get user's favorite products                | List of favorite products in JSON |
+| /favorites/add/:id       | POST         | Add a product to user's favorites            | Success message or status |
+| /favorites/remove/:id    | DELETE       | Remove a product from user's favorites       | Success message or status |
+| /cart                    | GET          | Get user's shopping cart                     | Shopping cart details in JSON |
+| /cart/add/:id            | POST         | Add a product to the shopping cart           | Updated shopping cart details or success status |
+| /cart/edit/:id           | PUT          | Edit product quantity in the shopping cart   | Updated shopping cart details or success status |
+| /cart/remove/:id         | DELETE       | Remove a product from the shopping cart      | Updated shopping cart details or success status |
+| /orders                  | GET          | Get user's order history                    | List of user's orders in JSON |
+| /orders/create           | POST         | Create a new order                           | New order object or success status |
+| /orders/:id              | GET          | Get details of a specific order              | Order details in JSON      |
+| /orders/:id/edit         | PUT          | Edit details of a specific order             | Updated order details or success status |
+| /orders/:id/delete       | DELETE       | Delete a specific order                      | Success message or status |
+| /chats                   | GET          | Get user's chat conversations                | List of chat conversations in JSON |
+| /chats/create/:userId    | POST         | Create a new chat conversation               | New chat conversation object or success status |
+| /chats/:id               | GET          | Get messages from a specific chat            | List of messages in JSON   |
+| /chats/:id/send-message  | POST         | Send a message in a chat                     | Updated chat messages or success status |
+
 
 ¡Gracias por utilizar nuestra plataforma de compra y venta en línea similar a Wallapop!
