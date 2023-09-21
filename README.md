@@ -1,4 +1,4 @@
-# Proyecto Full Stack de Ejemplo - Plataforma de Compra y Venta Similar a Wallapop
+# Proyecto Full Stack 
 
 Este proyecto full stack se centra en el desarrollo de una plataforma en línea que permite a los usuarios comprar y vender productos de segunda mano de manera similar a Wallapop. Los usuarios pueden explorar productos, iniciar sesión, guardar publicaciones en favoritos y comunicarse con los vendedores a través de un chat en línea.
 
@@ -20,7 +20,41 @@ Si deseas contribuir a este proyecto, sigue estos pasos:
 
 ## Autor
 
-Este proyecto fue desarrollado por [Tu Nombre].
+Este proyecto fue desarrollado por Carlos y Joao Carlos.
+
+## Modelos
+
+User Model
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  nombre: {
+    type: String,
+    required: true,
+  },
+  correo: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  contraseña: {
+    type: String,
+    required: true,
+  },
+  ubicacion: {
+    type: String, // O puedes usar un tipo de datos geoespaciales para coordenadas GPS
+  },
+  productosFavoritos: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Producto',
+    },
+  ],
+});
+
+module.exports = mongoose.model('Usuario', userSchema);
+
 
 ## Rutas de la Aplicación
 
