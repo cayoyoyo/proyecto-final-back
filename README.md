@@ -12,15 +12,15 @@ Este proyecto full stack se centra en el desarrollo de una plataforma en línea 
 ## Contribución
 
 Si deseas contribuir a este proyecto, sigue estos pasos:
-
+```shell
 1. Haz un fork del repositorio.
 2. Crea una nueva rama para tu contribución.
 3. Realiza tus cambios y asegúrate de que los tests pasen.
 4. Envía un Pull Request con tus cambios.
-
+```
 ## Autor
 
-Este proyecto fue desarrollado por Carlos y Joao Carlos.
+Este proyecto fue desarrollado por Carlos Campagnolo y Joao Carlos.
 
 ## Modelos
 
