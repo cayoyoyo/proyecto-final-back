@@ -147,7 +147,6 @@ module.exports = mongoose.model('Chat', chatSchema);
 |--------------------------|-----------------|----------------------------------------------|---------------------------|
 | /                        | GET             | Página de inicio con productos destacados     | Lista de productos en HTML  |
 | /login                   | POST            | Inicio de sesión de usuario                   | Token de autenticación de usuario |
-| /logout (no hace falta porque vamos cargar el token)                 | POST            | Cierre de sesión de usuario                   | Mensaje o estado de éxito |
 | /signup                  | POST            | Registro de usuario                           | Nuevo objeto de usuario o estado de éxito |
 | /productos                | GET             | Obtener todos los productos                   | Lista de productos en JSON  |
 | /productos/:id            | GET             | Obtener detalles de un producto específico   | Detalles del producto en JSON   |
