@@ -1,6 +1,6 @@
 # Proyecto Full Stack 
 
-Este proyecto full stack se centra en el desarrollo de una plataforma en línea que permite a los usuarios comprar y vender productos de segunda mano de manera similar a Wallapop. Los usuarios pueden explorar productos, iniciar sesión, guardar publicaciones en favoritos y comunicarse con los vendedores a través de un chat en línea.
+Este proyecto full stack se centra en el desarrollo de una plataforma en línea que permite a los usuarios comprar y vender productos de segunda mano. Los usuarios pueden explorar productos, iniciar sesión, guardar publicaciones en favoritos y comunicarse con los vendedores a través de un chat en línea.
 
 ## Instalación
 
@@ -24,7 +24,10 @@ Este proyecto fue desarrollado por Carlos y Joao Carlos.
 
 ## Modelos
 
-User Model
+Modelo de usuario:
+
+```javascript
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -43,7 +46,7 @@ const userSchema = new Schema({
     required: true,
   },
   ubicacion: {
-    type: String, // O puedes usar un tipo de datos geoespaciales para coordenadas GPS
+    type: String, 
   },
   productosFavoritos: [
     {
@@ -54,7 +57,89 @@ const userSchema = new Schema({
 });
 
 module.exports = mongoose.model('Usuario', userSchema);
+```
+Modelo de producto:
 
+```javascript
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const productoSchema = new Schema({
+  titulo: {
+    type: String,
+    required: true,
+  },
+  descripcion: {
+    type: String,
+    required: true,
+  },
+  precio: {
+    type: Number,
+    required: true,
+  },
+  ubicacionVendedor: {
+    type: String, 
+  },
+  estado: {
+    type: String,
+    enum: ['usado', 'nuevo', 'como nuevo'], 
+  },
+  imagenes: [String],
+  fechaPublicacion: {
+    type: Date,
+    default: Date.now,
+  },
+   disponible: {
+    type: Boolean,
+    default: true,
+  },
+  vendedor: {
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario',
+  },
+});
+
+module.exports = mongoose.model('Producto', productoSchema);
+```
+
+Modelo de Chat:
+```javascript
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const chatSchema = new Schema({
+  comprador: {
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario',
+    required: true,
+  },
+  vendedor: {
+    type: Schema.Types.ObjectId,
+    ref: 'Usuario',
+    required: true,
+  },
+  mensajes: [
+    {
+      autor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario',
+        required: true,
+      },
+      contenido: {
+        type: String,
+        required: true,
+      },
+      fechaHora: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
+});
+
+module.exports = mongoose.model('Chat', chatSchema);
+
+```
 
 ## Rutas de la Aplicación
 
