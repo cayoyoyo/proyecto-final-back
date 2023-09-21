@@ -46,14 +46,17 @@ const userSchema = new Schema({
     required: true,
   },
   ubicacion: {
-    type: String, 
+    type: String, // provincias con un enun
   },
   productosFavoritos: [
     {
-      type: Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId, // mirar la app de talkjs para el modelo de usuario
       ref: 'Producto',
     },
   ],
+  Produtoalaventa: [
+    //array de id con los productos que ha creado este usuario
+  ]
 });
 
 module.exports = mongoose.model('Usuario', userSchema);
@@ -76,9 +79,6 @@ const productoSchema = new Schema({
   precio: {
     type: Number,
     required: true,
-  },
-  ubicacionVendedor: {
-    type: String, 
   },
   estado: {
     type: String,
@@ -147,7 +147,7 @@ module.exports = mongoose.model('Chat', chatSchema);
 |--------------------------|-----------------|----------------------------------------------|---------------------------|
 | /                        | GET             | Página de inicio con productos destacados     | Lista de productos en HTML  |
 | /login                   | POST            | Inicio de sesión de usuario                   | Token de autenticación de usuario |
-| /logout                  | POST            | Cierre de sesión de usuario                   | Mensaje o estado de éxito |
+| /logout (no hace falta porque vamos cargar el token)                 | POST            | Cierre de sesión de usuario                   | Mensaje o estado de éxito |
 | /signup                  | POST            | Registro de usuario                           | Nuevo objeto de usuario o estado de éxito |
 | /productos                | GET             | Obtener todos los productos                   | Lista de productos en JSON  |
 | /productos/:id            | GET             | Obtener detalles de un producto específico   | Detalles del producto en JSON   |
@@ -157,15 +157,6 @@ module.exports = mongoose.model('Chat', chatSchema);
 | /favoritos               | GET             | Obtener productos favoritos del usuario      | Lista de productos favoritos en JSON |
 | /favoritos/agregar/:id       | POST         | Agregar un producto a favoritos del usuario | Mensaje de éxito o estado |
 | /favoritos/eliminar/:id    | DELETE       | Eliminar un producto de favoritos del usuario| Mensaje de éxito o estado |
-| /carrito                    | GET          | Obtener carrito de compras del usuario       | Detalles del carrito en JSON |
-| /carrito/agregar/:id            | POST    | Agregar un producto al carrito de compras     | Detalles del carrito actualizados o estado de éxito |
-| /carrito/editar/:id           | PUT         | Editar cantidad de un producto en el carrito  | Detalles del carrito actualizados o estado de éxito |
-| /carrito/eliminar/:id         | DELETE      | Eliminar un producto del carrito de compras   | Detalles del carrito actualizados o estado de éxito |
-| /ordenes                  | GET          | Obtener historial de órdenes del usuario     | Lista de órdenes del usuario en JSON |
-| /ordenes/crear           | POST         | Crear una nueva orden                         | Nuevo objeto de orden o estado de éxito |
-| /ordenes/:id              | GET          | Obtener detalles de una orden específica     | Detalles de la orden en JSON      |
-| /ordenes/:id/editar         | PUT         | Editar detalles de una orden específica      | Detalles de la orden actualizados o estado de éxito |
-| /ordenes/:id/eliminar       | DELETE      | Eliminar una orden específica                | Mensaje de éxito o estado |
 | /chats                   | GET          | Obtener conversaciones de chat del usuario    | Lista de conversaciones de chat en JSON |
 | /chats/crear/:userId    | POST         | Crear una nueva conversación de chat          | Nuevo objeto de conversación de chat o estado de éxito |
 | /chats/:id               | GET          | Obtener mensajes de una conversación específica | Lista de mensajes en JSON   |
