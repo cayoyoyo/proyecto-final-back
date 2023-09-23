@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/Producto.model');
+const User = require('../models/User.model')
 
 // router.get('/', (req, res, next) => {
 
@@ -49,12 +50,23 @@ router.post('/add', (req, res, next) => {
         price,
         condition,
         images,
+        seller
     });
 
     newProduct
         .save()
         .then((product) => {
-            res.status(201).json(product);
+            return User.findById(seller)
+                .then((user) => {
+                    if (!user) {
+                        throw new Error('Usuario no encontrado');
+                    }
+                    user.productsForSale.push(product._id);
+                    return user.save();
+                })
+                .then(() => {
+                    res.status(201).json(product);
+                });
         })
         .catch((error) => {
             console.error('Error al crear un nuevo producto:', error);
