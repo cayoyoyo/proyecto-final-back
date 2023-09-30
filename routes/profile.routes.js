@@ -18,10 +18,12 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-// Ruta para agregar un producto a favoritos del usuario
-router.post("/:id/favorites/add/:productId", (req, res, next) => {
+// Ruta para administrar los favoritos de un usuario
+router.post("/:id/favorites", (req, res, next) => {
   const userId = req.params.id;
-  const productId = req.params.productId;
+  const productId = req.body.productId; // Id del producto a agregar o eliminar
+  const action = req.body.action; // "add" o "remove"
+
 
   User.findById(userId)
     .then((user) => {
@@ -29,13 +31,23 @@ router.post("/:id/favorites/add/:productId", (req, res, next) => {
         return res.status(404).json({ message: "User not found" });
       }
 
-      if (user.favoriteProducts.includes(productId)) {
-        return res
-          .status(400)
-          .json({ message: "The product is already in favorites" });
-      }
+      if (action === "add") {
 
-      user.favoriteProducts.push(productId);
+        if (user.favoriteProducts.includes(productId)) {
+          console.log(" Producto ya está en favoritos")
+        } else {
+          user.favoriteProducts.push(productId);
+        }
+      } else if (action === "remove") {
+        const productIndex = user.favoriteProducts.indexOf(productId);
+        if (productIndex === -1) {
+          return res.status(400).json({ message: "The product is not in favorites" });
+        }
+
+        user.favoriteProducts.splice(productIndex, 1);
+      } else {
+        return res.status(400).json({ message: "Invalid action" });
+      }
 
       return user.save();
     })
@@ -47,8 +59,15 @@ router.post("/:id/favorites/add/:productId", (req, res, next) => {
         favoriteProducts: user.favoriteProducts,
       };
 
+      let message = "";
+      if (action === "add") {
+        message = "Product added to favorites successfully";
+      } else if (action === "remove") {
+        message = "Product removed from favorites successfully";
+      }
+
       res.status(200).json({
-        message: "Product added to favorites successfully",
+        message,
         user: filteredUser,
       });
     })
@@ -58,8 +77,8 @@ router.post("/:id/favorites/add/:productId", (req, res, next) => {
     });
 });
 
-// Ruta para eliminar un producto de favoritos del usuario
-router.delete("/:id/favorites/remove", (req, res, next) => {
+// Ruta para eliminar un producto de favoritos
+router.post("/:id/favorites/remove", (req, res, next) => {
   const userId = req.params.id;
   const productId = req.body.productId;
 
@@ -71,9 +90,7 @@ router.delete("/:id/favorites/remove", (req, res, next) => {
 
       const productIndex = user.favoriteProducts.indexOf(productId);
       if (productIndex === -1) {
-        return res
-          .status(400)
-          .json({ message: "The product is not in favorites" });
+        return res.status(400).json({ message: "The product is not in favorites" });
       }
 
       user.favoriteProducts.splice(productIndex, 1);
