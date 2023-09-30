@@ -66,7 +66,7 @@ router.post('/add', fileUploader.single('product-image'), (req, res) => {
   });
 
 // EDITAR UN PRODUCTO  --------------------------- funciona OK
-router.get("/:id/edit", (req, res, next) => {
+router.put("/:id/edit", (req, res, next) => {
   const productId = req.params.id;
   const { title, description, price, condition, images } = req.body;
 
@@ -92,8 +92,8 @@ router.get("/:id/edit", (req, res, next) => {
     });
 });
 
-// DELETAR UN PRODUCTO --------------------------- funciona OK
-router.get("/:id/delete", (req, res, next) => {
+// ELIMINAR UN PRODUCTO --------------------------- funciona OK
+router.delete("/:id/delete", (req, res, next) => {
   const productId = req.params.id;
 
   Product.findByIdAndRemove(productId)
