@@ -9,17 +9,27 @@ const Product = require("../models/Producto.model");
 
 //  TODOS LOS PRODUCTOS --------------------------- funciona OK
 router.get("/", (req, res, next) => {
-  //todas las rutas aqui tienen el "/product" antes
-  Product.find()
+  const searchTerm = req.query.term; // Obtén el término de búsqueda de la consulta
+
+  let query = {}; // Consulta inicial para obtener todos los productos
+
+  if (searchTerm) {
+    // Si se proporciona un término de búsqueda, ajusta la consulta para la búsqueda
+    query = {
+      title: { $regex: searchTerm, $options: "i" }, // Realiza una búsqueda insensible a mayúsculas y minúsculas en el campo "title"
+    };
+  }
+
+  Product.find(query)
     .then((products) => {
-      console.log("quiero saber que devuelve products " + products);
-      res.status(200).json(products); // Devuelve una respuesta JSON con los productos
+      res.status(200).json(products); // Devuelve una respuesta JSON con los productos que coinciden con la búsqueda
     })
     .catch((error) => {
       console.error("Error al recuperar los productos:", error);
       res.status(500).json({ error: "Error al recuperar los productos" });
     });
 });
+
 
 // DETALLES DE UN UNICO PRODUCTO --------------------------- funciona OK
 router.get("/:id", (req, res, next) => {
