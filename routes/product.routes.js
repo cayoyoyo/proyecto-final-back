@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const fileUploader = require('../config/cloudinaryconfig'); 
+const fileUploader = require('../config/cloudinaryconfig');
 const Product = require("../models/Producto.model");
 
 // router.get('/', (req, res, next) => {
@@ -13,7 +13,8 @@ router.get("/", (req, res, next) => {
   Product.find()
     .then((products) => {
       console.log("quiero saber que devuelve products " + products);
-      res.status(200).json(products); // Devuelve una respuesta JSON con los productos
+      const productsReverse = products.reverse()
+      res.status(200).json(productsReverse); // Devuelve una respuesta JSON con los productos
     })
     .catch((error) => {
       console.error("Error al recuperar los productos:", error);
@@ -44,26 +45,26 @@ router.get("/:id", (req, res, next) => {
 
 // CREAR UN NUEVO PRODUCTO  --------------------------- funciona OK
 router.post('/add', fileUploader.single('product-image'), (req, res) => {
-    const { title, description, price, condition, images, seller } = req.body;
-  
-    // Utiliza el modelo Product para crear y guardar un nuevo producto en la base de datos
-    Product.create({
-      title,
-      description,
-      price,
-      condition,
-      images: [req?.file?.path], // Asígnale la imagen al campo images como un arreglo de una sola imagen
-      seller,
+  const { title, description, price, condition, images, seller } = req.body;
+
+  // Utiliza el modelo Product para crear y guardar un nuevo producto en la base de datos
+  Product.create({
+    title,
+    description,
+    price,
+    condition,
+    images: [req?.file?.path], // Asígnale la imagen al campo images como un arreglo de una sola imagen
+    seller,
+  })
+    .then((newlyCreatedProductFromDB) => {
+      // Envía una respuesta con el producto recién creado
+      res.json(newlyCreatedProductFromDB);
     })
-      .then((newlyCreatedProductFromDB) => {
-        // Envía una respuesta con el producto recién creado
-        res.json(newlyCreatedProductFromDB);
-      })
-      .catch((error) => {
-        console.error(`Error while creating a new product: ${error}`);
-        res.status(500).json({ error: 'Error while creating a new product' });
-      });
-  });
+    .catch((error) => {
+      console.error(`Error while creating a new product: ${error}`);
+      res.status(500).json({ error: 'Error while creating a new product' });
+    });
+});
 
 // EDITAR UN PRODUCTO  --------------------------- funciona OK
 router.put("/:id/edit", (req, res, next) => {
