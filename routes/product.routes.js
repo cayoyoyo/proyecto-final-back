@@ -4,9 +4,6 @@ const fileUploader = require('../config/cloudinaryconfig');
 const Product = require("../models/Producto.model");
 const User = require("../models/User.model");
 
-// router.get('/', (req, res, next) => {
-
-// });
 
 //  TODOS LOS PRODUCTOS --------------------------- funciona OK
 router.get("/", (req, res, next) => {
@@ -57,7 +54,7 @@ router.get("/:id", (req, res, next) => {
 
 // CREAR UN NUEVO PRODUCTO  --------------------------- funciona OK
 router.post('/add', fileUploader.single('product-image'), (req, res) => {
-  const { title, description, price, condition, images, seller } = req.body;
+  const { title, description, price, condition, images, seller, category } = req.body;
 
   // Utiliza el modelo Product para crear y guardar un nuevo producto en la base de datos
   Product.create({
@@ -67,6 +64,7 @@ router.post('/add', fileUploader.single('product-image'), (req, res) => {
     condition,
     images: [req?.file?.path], // Asígnale la imagen al campo images como un arreglo de una sola imagen
     seller,
+    category,
   })
     .then((newlyCreatedProductFromDB) => {
       // Envía una respuesta con el producto recién creado
@@ -85,7 +83,7 @@ router.post('/add', fileUploader.single('product-image'), (req, res) => {
 // EDITAR UN PRODUCTO  --------------------------- funciona OK
 router.put("/:id/edit", (req, res, next) => {
   const productId = req.params.id;
-  const { title, description, price, condition, images } = req.body;
+  const { title, description, price, condition, images, category } = req.body;
 
   const updateProduct = {
     title,
@@ -93,6 +91,7 @@ router.put("/:id/edit", (req, res, next) => {
     price,
     condition,
     images,
+    category,
   };
 
   Product.findByIdAndUpdate(productId, updateProduct, { new: true })

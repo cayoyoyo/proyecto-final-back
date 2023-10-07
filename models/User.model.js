@@ -80,8 +80,9 @@ const userSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Product',
-    },
-  ]
+    }, 
+  ],
+  chatsId: []
 });
 
 module.exports = mongoose.model('User', userSchema);
