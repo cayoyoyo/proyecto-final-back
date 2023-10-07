@@ -6,11 +6,44 @@ const User = require("../models/User.model");
 router.get("/:id", (req, res, next) => {
   const userId = req.params.id;
 
+
   User.findById(userId)
-    .populate("favoriteProducts productsForSale")
+    .populate("productsForSale")
+    .populate("favoriteProducts")
     .then((response) => {
       console.log(response);
       res.status(200).json(response);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error });
+    });
+});
+
+router.put('/:userId/add-product/:productId', (req, res) => {
+  const userId = req.params.userId;
+  const productId = req.params.productId;
+
+  User.findByIdAndUpdate(
+    userId,
+    { $push: { productsForSale: productId } }, // Adicionar productId ao array productsForSale
+    { new: true } // Retorna o usuário atualizado
+  )
+    // .populate('favoriteProducts')
+    // .populate('productsForSale')
+    // .exec((err, resultado) => {
+    //   if (err) {
+    //     console.log("error del populate ===> ", err)
+    //   } else {
+    //     console.log("Hacer algo con el resultado")
+    //   }
+    // })
+    .then((updatedUser) => {
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'Usuário não encontrado' });
+      }
+
+      res.status(200).json(updatedUser);
     })
     .catch((error) => {
       console.error(error);

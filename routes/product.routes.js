@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fileUploader = require('../config/cloudinaryconfig');
 const Product = require("../models/Producto.model");
+const User = require("../models/User.model");
 
 // router.get('/', (req, res, next) => {
 
@@ -69,8 +70,12 @@ router.post('/add', fileUploader.single('product-image'), (req, res) => {
   })
     .then((newlyCreatedProductFromDB) => {
       // Envía una respuesta con el producto recién creado
+      console.log("log de newlyCreatedProductFromDB --------> ", newlyCreatedProductFromDB)
+
+      // User.findByIdAndUpdate(newlyCreatedProductFromDB.seller, { $push: { productsForSale: newlyCreatedProductFromDB._id } }, { new: true })
       res.json(newlyCreatedProductFromDB);
     })
+
     .catch((error) => {
       console.error(`Error while creating a new product: ${error}`);
       res.status(500).json({ error: 'Error while creating a new product' });
