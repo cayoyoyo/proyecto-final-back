@@ -29,15 +29,7 @@ router.put('/:userId/add-product/:productId', (req, res) => {
     { $push: { productsForSale: productId } }, // Adicionar productId ao array productsForSale
     { new: true } // Retorna o usuário atualizado
   )
-    // .populate('favoriteProducts')
-    // .populate('productsForSale')
-    // .exec((err, resultado) => {
-    //   if (err) {
-    //     console.log("error del populate ===> ", err)
-    //   } else {
-    //     console.log("Hacer algo con el resultado")
-    //   }
-    // })
+
     .then((updatedUser) => {
       if (!updatedUser) {
         return res.status(404).json({ message: 'Usuário não encontrado' });
