@@ -3,9 +3,6 @@ const router = express.Router();
 const fileUploader = require('../config/cloudinaryconfig');
 const Product = require("../models/Producto.model");
 
-// router.get('/', (req, res, next) => {
-
-// });
 
 //  TODOS LOS PRODUCTOS --------------------------- funciona OK
 router.get("/", (req, res, next) => {
