@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
+const cloudinaryProfileConfig = require("../config/cloudinaryconfigProfile");
 
 // Ruta para ver el perfil del usuario
 router.get("/:id", (req, res, next) => {
   const userId = req.params.id;
-
 
   User.findById(userId)
     .populate("productsForSale")
@@ -20,7 +20,7 @@ router.get("/:id", (req, res, next) => {
     });
 });
 
-router.put('/:userId/add-product/:productId', (req, res) => {
+router.put("/:userId/add-product/:productId", (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
 
@@ -40,7 +40,7 @@ router.put('/:userId/add-product/:productId', (req, res) => {
     // })
     .then((updatedUser) => {
       if (!updatedUser) {
-        return res.status(404).json({ message: 'Usuário não encontrado' });
+        return res.status(404).json({ message: "Usuário não encontrado" });
       }
 
       res.status(200).json(updatedUser);
@@ -51,12 +51,41 @@ router.put('/:userId/add-product/:productId', (req, res) => {
     });
 });
 
+// Ruta para editar el perfil
+c
+    const userId = req.params.id;
+    const { name, location } = req.body;
+
+    const profileImageUrl = req.file?.path;
+
+    const updatedFields = { name, location };
+
+    // Verifica si se cargó una nueva foto de perfil y actualiza la URL si es necesario
+    if (profileImageUrl) {
+      updatedFields.profileImageUrl = profileImageUrl;
+    }
+
+    // Actualiza el usuario con los campos actualizados
+    User.findByIdAndUpdate(userId, updatedFields, { new: true })
+      .then((updatedUser) => {
+        if (!updatedUser) {
+          return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        res.status(200).json(updatedUser);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error });
+      });
+  }
+);
+
 // Ruta para administrar los favoritos de un usuario
 router.post("/:id/favorites", (req, res, next) => {
   const userId = req.params.id;
   const productId = req.body.productId; // Id del producto a agregar o eliminar
   const action = req.body.action; // "add" o "remove"
-
 
   User.findById(userId)
     .then((user) => {
@@ -65,16 +94,17 @@ router.post("/:id/favorites", (req, res, next) => {
       }
 
       if (action === "add") {
-
         if (user.favoriteProducts.includes(productId)) {
-          console.log(" Producto ya está en favoritos")
+          console.log(" Producto ya está en favoritos");
         } else {
           user.favoriteProducts.push(productId);
         }
       } else if (action === "remove") {
         const productIndex = user.favoriteProducts.indexOf(productId);
         if (productIndex === -1) {
-          return res.status(400).json({ message: "The product is not in favorites" });
+          return res
+            .status(400)
+            .json({ message: "The product is not in favorites" });
         }
 
         user.favoriteProducts.splice(productIndex, 1);
@@ -123,7 +153,9 @@ router.post("/:id/favorites/remove", (req, res, next) => {
 
       const productIndex = user.favoriteProducts.indexOf(productId);
       if (productIndex === -1) {
-        return res.status(400).json({ message: "The product is not in favorites" });
+        return res
+          .status(400)
+          .json({ message: "The product is not in favorites" });
       }
 
       user.favoriteProducts.splice(productIndex, 1);
