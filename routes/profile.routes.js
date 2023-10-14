@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const cloudinaryProfileConfig = require("../config/cloudinaryconfigProfile");
+const upload = require("../config/cloudinaryconfigProfile");
 
 // Ruta para ver el perfil del usuario
 router.get("/:id", (req, res, next) => {
@@ -52,34 +53,36 @@ router.put("/:userId/add-product/:productId", (req, res) => {
 });
 
 // Ruta para editar el perfil
-c
-    const userId = req.params.id;
-    const { name, location } = req.body;
 
-    const profileImageUrl = req.file?.path;
+router.put("/:id/edit-profile", upload.single("profile-photo"), (req, res) => {
+  
+  const userId = req.params.id;
+  const { name, location } = req.body;
 
-    const updatedFields = { name, location };
+  const updatedFields = { name, location };
+  console.log("REQ.FILE", req.file);
 
-    // Verifica si se cargó una nueva foto de perfil y actualiza la URL si es necesario
-    if (profileImageUrl) {
-      updatedFields.profileImageUrl = profileImageUrl;
-    }
-
-    // Actualiza el usuario con los campos actualizados
-    User.findByIdAndUpdate(userId, updatedFields, { new: true })
-      .then((updatedUser) => {
-        if (!updatedUser) {
-          return res.status(404).json({ message: "Usuario no encontrado" });
-        }
-
-        res.status(200).json(updatedUser);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).json({ error });
-      });
+  // Verifica si se cargó una nueva foto de perfil
+  if (req.file) {
+    const profileImageUrl = req.file.path;
+    updatedFields.avatar = profileImageUrl;
   }
-);
+
+
+  // Actualiza el usuario con los campos actualizados
+  User.findByIdAndUpdate(userId, updatedFields, { new: true })
+    .then((updatedUser) => {
+      if (!updatedUser) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      console.log("USUARIO ACTUALIZADO:", updatedUser);
+      res.status(200).json(updatedUser);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error });
+    });
+});
 
 // Ruta para administrar los favoritos de un usuario
 router.post("/:id/favorites", (req, res, next) => {
