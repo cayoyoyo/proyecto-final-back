@@ -19,7 +19,8 @@ router.get("/", (req, res, next) => {
   }
 
   Product.find(query)
-    .then((products) => {
+  .populate("seller")
+  .then((products) => {
       console.log("quiero saber que devuelve products " + products);
       const productsReverse = products.reverse()
       res.status(200).json(productsReverse); // Devuelve una respuesta JSON con los productos

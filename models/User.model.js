@@ -88,6 +88,7 @@ const userSchema = new Schema({
     },
   ],
   chatsId: [],
+  isPrime: { type: Boolean},
 });
 
 module.exports = mongoose.model("User", userSchema);
