@@ -29,77 +29,160 @@ Modelo de usuario:
 ```javascript
 
 const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  nombre: {
+  name: {
     type: String,
     required: true,
   },
-  correo: {
+  email: {
     type: String,
     required: true,
     unique: true,
   },
-  contraseña: {
+  password: {
     type: String,
     required: true,
   },
-  ubicacion: {
-    type: String, // provincias con un enun
+  avatar: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/dzau21or3/image/upload/v1696676219/products/zcec5ay3iowms1aeylws.jpg",
   },
-  productosFavoritos: [
+  location: {
+    type: String,
+    enum: [
+      "Álava",
+      "Albacete",
+      "Alicante",
+      "Almería",
+      "Asturias",
+      "Ávila",
+      "Badajoz",
+      "Barcelona",
+      "Burgos",
+      "Cáceres",
+      "Cádiz",
+      "Cantabria",
+      "Castellón",
+      "Ciudad Real",
+      "Córdoba",
+      "Cuenca",
+      "Gerona",
+      "Granada",
+      "Guadalajara",
+      "Guipúzcoa",
+      "Huelva",
+      "Huesca",
+      "Islas Balears",
+      "Jaén",
+      "La Coruña",
+      "La Rioja",
+      "Las Palmas",
+      "León",
+      "Lérida",
+      "Lugo",
+      "Madrid",
+      "Málaga",
+      "Murcia",
+      "Navarra",
+      "Orense",
+      "Palencia",
+      "Pontevedra",
+      "Salamanca",
+      "Santa Cruz de Tenerife",
+      "Segovia",
+      "Sevilla",
+      "Soria",
+      "Tarragona",
+      "Teruel",
+      "Toledo",
+      "Valencia",
+      "Valladolid",
+      "Vizcaya",
+      "Zamora",
+      "Zaragoza",
+    ],
+  },
+  favoriteProducts: [
     {
-      type: Schema.Types.ObjectId, // mirar la app de talkjs para el modelo de usuario
-      ref: 'Producto',
+      type: Schema.Types.ObjectId,
+      ref: "Product",
     },
   ],
-  Produtoalaventa: [
-    //array de id con los productos que ha creado este usuario
-  ]
+  productsForSale: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
+  chatsId: [],
+  isPrime: { type: Boolean},
 });
 
-module.exports = mongoose.model('Usuario', userSchema);
+module.exports = mongoose.model("User", userSchema);
+
 ```
 Modelo de producto:
 
 ```javascript
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const productoSchema = new Schema({
-  titulo: {
+const productSchema = new Schema({
+  title: {
     type: String,
     required: true,
   },
-  descripcion: {
+  description: {
     type: String,
     required: true,
   },
-  precio: {
+  price: {
     type: Number,
     required: true,
   },
-  estado: {
+  condition: {
     type: String,
-    enum: ['usado', 'nuevo', 'como nuevo'], 
+     enum: ["used", "new", "like new"],
   },
-  imagenes: [String],
-  fechaPublicacion: {
+  images: [String],
+  publicationDate: {
     type: Date,
     default: Date.now,
   },
-   disponible: {
+  available: {
     type: Boolean,
     default: true,
   },
-  vendedor: {
+  seller: {
     type: Schema.Types.ObjectId,
-    ref: 'Usuario',
+    ref: "User",
+  },
+  category: {
+    type: String,
+    enum: [
+      "Electrodomésticos",
+      "Muebles",
+      "Electrónica",
+      "Ropa y Accesorios",
+      "Herramientas",
+      "Juguetes",
+      "Vehículos",
+      "Deportes y Fitness",
+      "Arte y Antigüedades",
+      "Libros y Revistas",
+      "Otros",
+    ],
   },
 });
 
-module.exports = mongoose.model('Producto', productoSchema);
+const Product = mongoose.model("Product", productSchema);
+
+module.exports = Product;
+
 ```
 
 Modelo de Chat:
