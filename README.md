@@ -185,44 +185,6 @@ module.exports = Product;
 
 ```
 
-Modelo de Chat:
-```javascript
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-
-const chatSchema = new Schema({
-  comprador: {
-    type: Schema.Types.ObjectId,
-    ref: 'Usuario',
-    required: true,
-  },
-  vendedor: {
-    type: Schema.Types.ObjectId,
-    ref: 'Usuario',
-    required: true,
-  },
-  mensajes: [
-    {
-      autor: {
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario',
-        required: true,
-      },
-      contenido: {
-        type: String,
-        required: true,
-      },
-      fechaHora: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
-});
-
-module.exports = mongoose.model('Chat', chatSchema);
-
-```
 
 ## Rutas de la Aplicación
 
